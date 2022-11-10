@@ -1,6 +1,6 @@
 const {WebClient, LogLevel} = require("@slack/web-api");
 
-const SLACK_API_TOKEN = "xoxb-4366820225681-4366847516641-WRqUZEY1hVyNBoXC6IhulP5Z";
+const SLACK_API_TOKEN = "Require API Token";
 const client = new WebClient(SLACK_API_TOKEN, {
     logLevel: LogLevel.DEBUG
 });

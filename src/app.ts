@@ -17,10 +17,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../src/client/build')));
 
 app.get("/", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, 'client/build/index.html'));
+    res.sendFile(path.join(__dirname, '../src/client/build/index.html'));
 });
 
 app.get("/alert", (req: Request, res: Response) => {

@@ -56,7 +56,7 @@ export const sendBotMsg = async (baseUrl: string, courts: any) => {
         })
         const result = await client.chat.postMessage({
             channel: "#alert",
-            blocks: msgBlock
+            blocks: msgBlock.slice(0,49)
         });
 
         console.log(result);

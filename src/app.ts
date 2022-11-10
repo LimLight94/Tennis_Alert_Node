@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import {Tennis, DateAndTime, ITennis} from "./tennis.model"
 import connect from "./db"
 import {sendBotMsg} from "./slack";
+import path from "path";
 
 const app = express()
 const port = process.env.port || 3000
@@ -16,9 +17,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World!");
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
 app.get("/alert", (req: Request, res: Response) => {

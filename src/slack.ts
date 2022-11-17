@@ -55,7 +55,6 @@ const makeCourtDateAndTime = (dateAndTime: Array<any>) => {
 
 export const sendBotMsg = async (baseUrl: string, courts: any) => {
     try {
-        msgBlock.push(makeLinkButton(baseUrl))
         courts.forEach((item: any, index: number) => {
             let nameBlock = makeCourtNameSection(item.name)
             let dateAndTimeBlocks = []
@@ -63,6 +62,7 @@ export const sendBotMsg = async (baseUrl: string, courts: any) => {
             if (dateAndTimeBlocks.length == 0) {
                 return;
             } else {
+                msgBlock.push(makeLinkButton(baseUrl))
                 msgBlock.push(nameBlock)
                 msgBlock.push(...dateAndTimeBlocks)
             }

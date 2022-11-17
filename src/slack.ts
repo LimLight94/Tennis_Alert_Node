@@ -31,7 +31,13 @@ const makeCourtNameSection = (courtName: string) => {
 
 const makeCourtDateAndTime = (dateAndTime: Array<any>) => {
     let result = dateAndTime.map(item => {
-        let result = `${item.date}\n${item.time}`
+        let filterTimes = item.time.filter((timeItem: String) => {
+            return "18:00" <= timeItem.split("~")[0]
+        })
+        if (filterTimes.length == 0) {
+            return [];
+        }
+        let result = `${item.date}\n${filterTimes}`
         return {
             "type": "section",
             "text": {
@@ -51,12 +57,22 @@ export const sendBotMsg = async (baseUrl: string, courts: any) => {
     try {
         msgBlock.push(makeLinkButton(baseUrl))
         courts.forEach((item: any, index: number) => {
-            msgBlock.push(makeCourtNameSection(item.name))
-            msgBlock.push(...makeCourtDateAndTime(item.dateAndTime))
+            let nameBlock = makeCourtNameSection(item.name)
+            let dateAndTimeBlocks = []
+            dateAndTimeBlocks.push(...makeCourtDateAndTime(item.dateAndTime))
+            if (dateAndTimeBlocks.length == 0) {
+                return;
+            } else {
+                msgBlock.push(nameBlock)
+                msgBlock.push(...dateAndTimeBlocks)
+            }
         })
+        if (msgBlock.length <= 1) {
+            return;
+        }
         const result = await client.chat.postMessage({
             channel: "#alert",
-            blocks: msgBlock.slice(0,49)
+            blocks: msgBlock.slice(0, 49)
         });
 
         console.log(result);
